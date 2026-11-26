@@ -22,5 +22,6 @@ def answer(question, passage):
         },
         timeout=(5, 300),
     )
-    response.raise_for_status()
+    if not response.ok:
+        raise SystemExit(f"Ollama HTTP {response.status_code}: {response.text}")
     return response.json()["message"]["content"]
